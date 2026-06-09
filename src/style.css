@@ -1,0 +1,389 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: #fbf7ff;
+  color: #2d2438;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 18px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(45, 24, 68, 0.78);
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+}
+
+.logo {
+  font-family: 'Great Vibes', cursive;
+  color: white;
+  font-size: 42px;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  margin-left: 24px;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.hero {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(50, 20, 75, .68), rgba(120, 61, 150, .55)),
+    url("https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  padding: 0 8%;
+  color: white;
+}
+
+.hero-content {
+  max-width: 720px;
+}
+
+.hero span,
+.nosotros span {
+  color: #e7c6ff;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-weight: 600;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 88px;
+  margin: 18px 0;
+  font-weight: 800;
+}
+
+.hero p {
+  font-size: 23px;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.btn,
+button {
+  display: inline-block;
+  background: linear-gradient(135deg, #b76cff, #7b2cbf);
+  color: white;
+  padding: 15px 34px;
+  border: none;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(123, 44, 191, .35);
+  transition: .3s;
+  font-family: 'Poppins', sans-serif;
+}
+
+.btn:hover,
+button:hover {
+  transform: translateY(-4px);
+}
+
+.servicios,
+.galeria,
+.testimonios,
+.citas {
+  padding: 85px 8%;
+  text-align: center;
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  color: #5a189a;
+  margin-bottom: 12px;
+}
+
+.subtitulo {
+  font-size: 18px;
+  margin-bottom: 45px;
+  color: #6b5a78;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  background: white;
+  padding: 35px;
+  border-radius: 30px;
+  box-shadow: 0 18px 40px rgba(90, 24, 154, .13);
+  transition: .3s;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+}
+
+.card h3 {
+  font-family: 'Playfair Display', serif;
+  color: #7b2cbf;
+  font-size: 26px;
+}
+
+.card p {
+  line-height: 1.8;
+}
+
+.card strong {
+  display: block;
+  color: #5a189a;
+  font-size: 24px;
+  margin: 18px 0;
+}
+
+.galeria-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 22px;
+}
+
+.galeria-grid img {
+  width: 100%;
+  height: 330px;
+  object-fit: cover;
+  border-radius: 30px;
+  box-shadow: 0 18px 35px rgba(0,0,0,.15);
+  transition: .3s;
+}
+
+.galeria-grid img:hover {
+  transform: scale(1.04);
+}
+
+.nosotros {
+  background:
+    linear-gradient(rgba(90, 24, 154, .86), rgba(157, 78, 221, .76)),
+    url("https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80");
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 110px 8%;
+}
+
+.contenido-nosotros {
+  max-width: 700px;
+}
+
+.nosotros h2 {
+  color: white;
+  font-size: 50px;
+}
+
+.nosotros p {
+  font-size: 20px;
+  line-height: 1.8;
+}
+
+.citas {
+  max-width: 760px;
+  margin: 70px auto;
+  background: white;
+  border-radius: 38px;
+  box-shadow: 0 20px 50px rgba(90, 24, 154, .18);
+}
+
+.citas input,
+.citas select,
+.citas textarea {
+  display: block;
+  width: 100%;
+  margin: 14px 0;
+  padding: 16px;
+  border-radius: 16px;
+  border: 2px solid #e0aaff;
+  font-size: 16px;
+  outline: none;
+  font-family: 'Poppins', sans-serif;
+}
+
+.citas input:focus,
+.citas select:focus,
+.citas textarea:focus {
+  border-color: #7b2cbf;
+  box-shadow: 0 0 0 4px rgba(123, 44, 191, .15);
+}
+
+textarea {
+  height: 115px;
+  resize: none;
+}
+
+footer {
+  background: #240046;
+  color: white;
+  text-align: center;
+  padding: 35px;
+}
+
+footer h3 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 44px;
+  margin: 0;
+}
+
+.whatsapp {
+  position: fixed;
+  right: 25px;
+  bottom: 25px;
+  background: #25d366;
+  color: white;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12px 25px rgba(0,0,0,.25);
+  z-index: 1000;
+}
+
+@media (max-width: 750px) {
+  .navbar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .menu a {
+    margin: 0 7px;
+    font-size: 13px;
+  }
+
+  .hero h1 {
+    font-size: 52px;
+  }
+
+  .hero p {
+    font-size: 18px;
+  }
+
+  h2 {
+    font-size: 36px;
+  }
+}
+
+.admin-panel {
+  min-height: 100vh;
+  padding: 60px 8%;
+  background: #fbf7ff;
+}
+
+.admin-panel h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 48px;
+  color: #5a189a;
+  margin-bottom: 5px;
+}
+
+.resumen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  margin: 35px 0;
+}
+
+.resumen div {
+  background: white;
+  padding: 25px;
+  border-radius: 22px;
+  box-shadow: 0 12px 30px rgba(90, 24, 154, .14);
+  text-align: center;
+}
+
+.resumen h3 {
+  font-size: 34px;
+  color: #7b2cbf;
+  margin: 0;
+}
+
+.lista-citas {
+  display: grid;
+  gap: 22px;
+}
+
+.cita-card {
+  background: white;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 14px 35px rgba(90, 24, 154, .14);
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.cita-card h3 {
+  color: #5a189a;
+  font-size: 26px;
+  margin-top: 0;
+}
+
+.estado {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.estado.pendiente {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.estado.confirmada {
+  background: #d4edda;
+  color: #155724;
+}
+
+.estado.cancelada {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 140px;
+}
+
+.acciones a {
+  text-align: center;
+  background: #25d366;
+  color: white;
+  padding: 13px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+@media (max-width: 700px) {
+  .cita-card {
+    flex-direction: column;
+  }
+}
