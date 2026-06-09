@@ -1,96 +1,153 @@
 import './style.css'
-import { db } from './firebase.js'
+import { db, auth } from './firebase.js'
 import { ref, onValue, update } from 'firebase/database'
+import {
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from 'firebase/auth'
 
-document.querySelector('#admin').innerHTML = `
-<section class="admin-panel">
-  <h1>Panel Purple Bloom</h1>
-  <p>Administra las citas registradas en la página.</p>
+const admin = document.querySelector('#admin')
 
-  <div class="resumen">
-    <div>
-      <h3 id="total">0</h3>
-      <span>Total</span>
-    </div>
+function mostrarLogin() {
+  admin.innerHTML = `
+    <section class="login-admin">
+      <div class="login-card">
+        <h1>Purple Bloom</h1>
+        <h2>Panel Administrador</h2>
 
-    <div>
-      <h3 id="pendientes">0</h3>
-      <span>Pendientes</span>
-    </div>
+        <input type="email" id="email" placeholder="Correo electrónico">
+        <input type="password" id="password" placeholder="Contraseña">
 
-    <div>
-      <h3 id="confirmadas">0</h3>
-      <span>Confirmadas</span>
-    </div>
+        <button id="loginBtn">Entrar</button>
 
-    <div>
-      <h3 id="canceladas">0</h3>
-      <span>Canceladas</span>
-    </div>
-  </div>
+        <p id="loginError"></p>
+      </div>
+    </section>
+  `
 
-  <div id="listaCitas" class="lista-citas"></div>
-</section>
-`
+  document.getElementById('loginBtn').addEventListener('click', async () => {
+    const email = document.getElementById('email').value
+    const password = document.getElementById('password').value
 
-const listaCitas = document.getElementById('listaCitas')
+    try {
+      await signInWithEmailAndPassword(auth, email, password)
+    } catch (error) {
+      document.getElementById('loginError').textContent =
+        'Correo o contraseña incorrectos'
+    }
+  })
+}
 
-onValue(ref(db, 'citas'), (snapshot) => {
-  listaCitas.innerHTML = ''
+function mostrarPanel() {
+  admin.innerHTML = `
+    <section class="admin-panel">
+      <button id="logoutBtn" class="logout">Cerrar sesión</button>
 
-  let total = 0
-  let pendientes = 0
-  let confirmadas = 0
-  let canceladas = 0
+      <h1>Panel Purple Bloom</h1>
+      <p>Administra las citas registradas en la página.</p>
 
-  if (!snapshot.exists()) {
-    listaCitas.innerHTML = '<p>No hay citas registradas.</p>'
-    return
-  }
+      <div class="resumen">
+        <div>
+          <h3 id="total">0</h3>
+          <span>Total</span>
+        </div>
 
-  snapshot.forEach((childSnapshot) => {
-    const id = childSnapshot.key
-    const cita = childSnapshot.val()
+        <div>
+          <h3 id="pendientes">0</h3>
+          <span>Pendientes</span>
+        </div>
 
-    total++
+        <div>
+          <h3 id="confirmadas">0</h3>
+          <span>Confirmadas</span>
+        </div>
 
-    if (cita.estado === 'pendiente') pendientes++
-    if (cita.estado === 'confirmada') confirmadas++
-    if (cita.estado === 'cancelada') canceladas++
-
-    const tarjeta = document.createElement('div')
-    tarjeta.className = 'cita-card'
-
-    tarjeta.innerHTML = `
-      <div>
-        <h3>${cita.nombre}</h3>
-        <p><strong>Teléfono:</strong> ${cita.telefono}</p>
-        <p><strong>Servicio:</strong> ${cita.servicio}</p>
-        <p><strong>Fecha:</strong> ${cita.fecha}</p>
-        <p><strong>Hora:</strong> ${cita.hora}</p>
-        <p><strong>Notas:</strong> ${cita.notas || 'Sin notas'}</p>
-        <p><strong>Creado:</strong> ${cita.creadoEn || 'Sin fecha'}</p>
-        <p class="estado ${cita.estado}">${cita.estado}</p>
+        <div>
+          <h3 id="canceladas">0</h3>
+          <span>Canceladas</span>
+        </div>
       </div>
 
-      <div class="acciones">
-        <button onclick="cambiarEstado('${id}', 'confirmada')">Confirmar</button>
-        <button onclick="cambiarEstado('${id}', 'cancelada')">Cancelar</button>
-        <a href="https://wa.me/52${cita.telefono}" target="_blank">WhatsApp</a>
-      </div>
-    `
+      <div id="listaCitas" class="lista-citas"></div>
+    </section>
+  `
 
-    listaCitas.appendChild(tarjeta)
+  document.getElementById('logoutBtn').addEventListener('click', () => {
+    signOut(auth)
   })
 
-  document.getElementById('total').textContent = total
-  document.getElementById('pendientes').textContent = pendientes
-  document.getElementById('confirmadas').textContent = confirmadas
-  document.getElementById('canceladas').textContent = canceladas
-})
+  cargarCitas()
+}
+
+function cargarCitas() {
+  const listaCitas = document.getElementById('listaCitas')
+
+  onValue(ref(db, 'citas'), (snapshot) => {
+    listaCitas.innerHTML = ''
+
+    let total = 0
+    let pendientes = 0
+    let confirmadas = 0
+    let canceladas = 0
+
+    if (!snapshot.exists()) {
+      listaCitas.innerHTML = '<p>No hay citas registradas.</p>'
+      return
+    }
+
+    snapshot.forEach((childSnapshot) => {
+      const id = childSnapshot.key
+      const cita = childSnapshot.val()
+
+      total++
+
+      if (cita.estado === 'pendiente') pendientes++
+      if (cita.estado === 'confirmada') confirmadas++
+      if (cita.estado === 'cancelada') canceladas++
+
+      const tarjeta = document.createElement('div')
+      tarjeta.className = 'cita-card'
+
+      tarjeta.innerHTML = `
+        <div>
+          <h3>${cita.nombre}</h3>
+          <p><strong>Teléfono:</strong> ${cita.telefono}</p>
+          <p><strong>Servicio:</strong> ${cita.servicio}</p>
+          <p><strong>Fecha:</strong> ${cita.fecha}</p>
+          <p><strong>Hora:</strong> ${cita.hora}</p>
+          <p><strong>Notas:</strong> ${cita.notas || 'Sin notas'}</p>
+          <p><strong>Creado:</strong> ${cita.creadoEn || 'Sin fecha'}</p>
+          <p class="estado ${cita.estado}">${cita.estado}</p>
+        </div>
+
+        <div class="acciones">
+          <button onclick="cambiarEstado('${id}', 'confirmada')">Confirmar</button>
+          <button onclick="cambiarEstado('${id}', 'cancelada')">Cancelar</button>
+          <a href="https://wa.me/52${cita.telefono}" target="_blank">WhatsApp</a>
+        </div>
+      `
+
+      listaCitas.appendChild(tarjeta)
+    })
+
+    document.getElementById('total').textContent = total
+    document.getElementById('pendientes').textContent = pendientes
+    document.getElementById('confirmadas').textContent = confirmadas
+    document.getElementById('canceladas').textContent = canceladas
+  })
+}
 
 window.cambiarEstado = function(id, estado) {
   update(ref(db, `citas/${id}`), {
     estado: estado
   })
 }
+
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    mostrarPanel()
+  } else {
+    mostrarLogin()
+  }
+})

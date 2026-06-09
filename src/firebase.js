@@ -1,5 +1,6 @@
-import { initializeApp } from "firebase/app";
-import { getDatabase } from "firebase/database";
+import { initializeApp } from "firebase/app"
+import { getDatabase } from "firebase/database"
+import { getAuth } from "firebase/auth"
 
 const firebaseConfig = {
   apiKey: "AIzaSyB-_S3vbEFwbYHeA0ENtyBQEQyy6kGTxMc",
@@ -9,8 +10,9 @@ const firebaseConfig = {
   storageBucket: "peinados-5f37f.firebasestorage.app",
   messagingSenderId: "605579037908",
   appId: "1:605579037908:web:711268e51ac838922d3f41"
-};
+}
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig)
 
-export const db = getDatabase(app);
+export const db = getDatabase(app)
+export const auth = getAuth(app)
